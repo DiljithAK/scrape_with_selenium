@@ -39,13 +39,13 @@ def get_image(soup):
 
 def make_csv(data):
     df = pd.DataFrame.from_dict(data)
-    os.makedirs('scrape_with_selenium_103/data', exist_ok=True)
-    df.to_csv('scrape_with_selenium_103/data/products.csv', index=False)
+    os.makedirs('scrape_with_selenium_103/data/result', exist_ok=True)
+    df.to_csv('scrape_with_selenium_103/data/result/products.csv', index=False)
 
 if __name__ == '__main__':
     data = {'book': [], 'price': [], 'decription': [], 'image': []}
-    for file in os.listdir('scrape_with_selenium_103/products'):
-        with open(f'scrape_with_selenium_103/products/{file}', 'r', encoding='utf-8') as f:
+    for file in os.listdir('scrape_with_selenium_103/data/products'):
+        with open(f'scrape_with_selenium_103/data/products/{file}', 'r', encoding='utf-8') as f:
             html_doc = f.read()
             soup = BeautifulSoup(html_doc, 'html.parser')
 

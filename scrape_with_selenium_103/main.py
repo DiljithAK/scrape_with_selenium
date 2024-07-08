@@ -23,8 +23,8 @@ def save_book_html(driver, page_no, book_no):
             EC.presence_of_element_located((By.CLASS_NAME, 'content'))
         )
         html = page_content.get_attribute("outerHTML")
-        os.makedirs("scrape_with_selenium_103/products", exist_ok=True)
-        with open(f"scrape_with_selenium_103/products/book_{page_no}_{book_no}.html", "w", encoding="utf-8") as f:
+        os.makedirs("scrape_with_selenium_103/data/products", exist_ok=True)
+        with open(f"scrape_with_selenium_103/data/products/book_{page_no}_{book_no}.html", "w", encoding="utf-8") as f:
             f.write(html)
     except Exception as e:
         print(f"Error saving HTML for book {book_no}: {e}")
