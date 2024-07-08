@@ -32,7 +32,7 @@ def save_book_html(driver, page_no, book_no):
 def main():
     PATH = "C:\Program Files (x86)\chromedriver.exe"
 
-    for page_no in range(1, 11):
+    for page_no in range(1, 2):
         if page_no % 3 == 1:
             if page_no > 1:
                 driver.quit()
@@ -47,7 +47,7 @@ def main():
                 EC.presence_of_all_elements_located((By.CLASS_NAME, 'product_pod'))
             )
 
-            for book_no, book in enumerate(books):
+            for book_no, book in enumerate(books[:6]):
                 book_link = book.find_element(By.TAG_NAME, 'a')
                 link = book_link.get_attribute('href')
 
