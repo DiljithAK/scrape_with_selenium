@@ -14,7 +14,7 @@ def get_price(soup):
     try:
         price = soup.find('p', attrs={'class': 'price_color'})
         price_text = price.text
-        price_text = price_text.replace("£", "")
+        price_text = price_text.replace("£", "") # Remove £ from the extracted data
     except:
         price_text = ''
     return price_text
@@ -38,17 +38,27 @@ def get_image(soup):
     return image_link
 
 def make_csv(data):
+    # create DataFrame using dictionary
     df = pd.DataFrame.from_dict(data)
     os.makedirs('scrape_with_selenium_103/data/result', exist_ok=True)
     df.to_csv('scrape_with_selenium_103/data/result/products.csv', index=False)
 
+# To make the code inside the if run only when the file being runned
 if __name__ == '__main__':
+
+    # Create dictionary to store extracted data
     data = {'book': [], 'price': [], 'decription': [], 'image': []}
+
+    # Get all the files in the product directory
     for file in os.listdir('scrape_with_selenium_103/data/products'):
+
+        # Loop through the html files in the product directory
         with open(f'scrape_with_selenium_103/data/products/{file}', 'r', encoding='utf-8') as f:
+
             html_doc = f.read()
             soup = BeautifulSoup(html_doc, 'html.parser')
 
+            # Extract the data from the soup and append the value in data
             data['book'].append(get_book_name(soup))
             data['price'].append(get_price(soup))
             data['decription'].append(get_description(soup))
