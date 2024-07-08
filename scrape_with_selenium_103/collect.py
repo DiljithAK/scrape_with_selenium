@@ -1,5 +1,6 @@
 import os
 from bs4 import BeautifulSoup
+import pandas as pd
 
 def get_book_name(soup):
     try:
@@ -13,6 +14,7 @@ def get_price(soup):
     try:
         price = soup.find('p', attrs={'class': 'price_color'})
         price_text = price.text
+        price_text = price_text.replace("£", "")
     except:
         price_text = ''
     return price_text
@@ -35,10 +37,15 @@ def get_image(soup):
         image_link = ''
     return image_link
 
+def make_csv(data):
+    df = pd.DataFrame.from_dict(data)
+    os.makedirs('scrape_with_selenium_103/data', exist_ok=True)
+    df.to_csv('scrape_with_selenium_103/data/products.csv', index=False)
+
 if __name__ == '__main__':
     data = {'book': [], 'price': [], 'decription': [], 'image': []}
-    for file in os.listdir('book_to_scrape/products'):
-        with open(f'book_to_scrape/products/{file}', 'r', encoding='utf-8') as f:
+    for file in os.listdir('scrape_with_selenium_103/products'):
+        with open(f'scrape_with_selenium_103/products/{file}', 'r', encoding='utf-8') as f:
             html_doc = f.read()
             soup = BeautifulSoup(html_doc, 'html.parser')
 
@@ -47,4 +54,5 @@ if __name__ == '__main__':
             data['decription'].append(get_description(soup))
             data['image'].append(get_image(soup))
 
-    print(data)
+            make_csv(data)
+
