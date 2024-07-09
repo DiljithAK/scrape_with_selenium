@@ -47,6 +47,8 @@ def main():
         URL = f"https://books.toscrape.com/catalogue/page-{page_no}.html"
         driver.get(URL)
 
+        driver.execute_script("window.scrollBy(0, 400);") # Scroll page
+
         try:
             # Wait till element with class product_pod to load
             books = WebDriverWait(driver, 10).until(
@@ -62,6 +64,9 @@ def main():
                 driver.get(link) # Get detail page
 
                 save_book_html(driver, page_no, book_no) # Get the html content
+
+                driver.execute_script("window.scrollBy(0, 200);") # Scroll page
+                time.sleep(2)
 
                 driver.back() # Navigate back to book list from the detail page
         except Exception as e:
